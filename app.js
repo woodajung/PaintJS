@@ -1,5 +1,6 @@
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
+const colors = document.getElementsByClassName('base');
 let isPainting = false;
 
 // 캔버스 크기 지정
@@ -30,9 +31,23 @@ function stopPainting() {
     isPainting = false;
 }
 
+function handleColorClick(e) {
+    const color = e.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+
+    const selectedColor = document.querySelector('.selected');
+    selectedColor.classList.remove('selected');
+
+    e.target.classList.add('selected');
+}
+
 if (canvas) {
     canvas.addEventListener('mousemove', onMouseMove);
     canvas.addEventListener('mousedown', startPainting);
     canvas.addEventListener('mouseup', stopPainting);
     canvas.addEventListener('mouseleave', stopPainting);
 }
+
+Array.from(colors).forEach(color =>
+  color.addEventListener("click", handleColorClick)
+);
