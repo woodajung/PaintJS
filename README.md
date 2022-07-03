@@ -5,13 +5,11 @@ vanilla Javscript, HTML, CSS
 
 
 ## 구성
-### 1. Canvas
-### 2. 2D Context
-### 3. Recap
-### 4. Change Color
-### 5. Brush Size
-### 6. Filling Mode
-### 7. Saving the Image
+### 1. Canvas / 2D Context
+### 2. Change Color
+### 3. Brush Size
+### 4. Filling Mode
+### 5. Saving the Image
 
 
 ## 참고
