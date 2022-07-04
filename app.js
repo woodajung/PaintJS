@@ -4,15 +4,18 @@ const colors = document.getElementsByClassName('base');
 const range = document.getElementById("colorRange");
 const mode = document.getElementById("colorMode");
 const reset = document.getElementById('colorReset');
+const CANVAS_WIDTH = 700;
+const CANVAS_HEIGHT = 700;
+const COLOR = '#2c2c2c';
 
 let isPainting = false;
 let filling = false;
 
 // 캔버스 크기 지정
-canvas.width = 700;
-canvas.height = 700;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
-ctx.strokeStyle = '#2c2c2c';
+ctx.strokeStyle = COLOR;
 ctx.lineWidth = 2.5;
 
 function onMouseMove(e) {
@@ -30,6 +33,10 @@ function onMouseMove(e) {
 
 function startPainting() {
     isPainting = true;
+
+     if (filling) {
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
 }
 
 function stopPainting() {
@@ -39,6 +46,7 @@ function stopPainting() {
 function handleColorClick(e) {
     const color = e.target.style.backgroundColor;
     ctx.strokeStyle = color;
+    ctx.fillStyle = color;
 
     const selectedColor = document.querySelector('.selected');
     selectedColor.classList.remove('selected');
@@ -47,7 +55,7 @@ function handleColorClick(e) {
 }
 
 function handleResetClick() {
-    ctx.clearRect(0, 0, 700, 700);
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
 function handleRangeChange(e) {
