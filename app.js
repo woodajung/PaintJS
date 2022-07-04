@@ -1,12 +1,13 @@
+const CANVAS_WIDTH = 700;
+const CANVAS_HEIGHT = 700;
+const COLOR = '#2c2c2c';
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 const colors = document.getElementsByClassName('base');
 const range = document.getElementById("colorRange");
 const mode = document.getElementById("colorMode");
 const reset = document.getElementById('colorReset');
-const CANVAS_WIDTH = 700;
-const CANVAS_HEIGHT = 700;
-const COLOR = '#2c2c2c';
+const save = document.getElementById('colorSave');
 
 let isPainting = false;
 let filling = false;
@@ -15,6 +16,11 @@ let filling = false;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
+// 캔버스 배경 설정
+ctx.fillStyle = 'white';
+ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+ctx.fillStyle = COLOR;
 ctx.strokeStyle = COLOR;
 ctx.lineWidth = 2.5;
 
@@ -33,10 +39,6 @@ function onMouseMove(e) {
 
 function startPainting() {
     isPainting = true;
-
-     if (filling) {
-        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    }
 }
 
 function stopPainting() {
@@ -72,11 +74,32 @@ function handleModeClick() {
     }
 }
 
+function handleCanvasClick() {
+    if (filling) {
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
+}
+
+function handleCM(e) {
+    // 우클릭 방지
+    e.preventDefault();
+}
+
+function handleSaveClick() {
+    const image = canvas.toDataURL();
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "PaintJS[🎨]";
+    link.click();
+}
+
 if (canvas) {
     canvas.addEventListener('mousemove', onMouseMove);
     canvas.addEventListener('mousedown', startPainting);
     canvas.addEventListener('mouseup', stopPainting);
     canvas.addEventListener('mouseleave', stopPainting);
+    canvas.addEventListener('click', handleCanvasClick);
+    canvas.addEventListener('contextmenu', handleCM);
 }
 
 Array.from(colors).forEach(color =>
@@ -93,4 +116,8 @@ if (mode) {
 
 if (reset) {
     reset.addEventListener('click', handleResetClick);
+}
+
+if (save) {
+    save.addEventListener('click', handleSaveClick);
 }
